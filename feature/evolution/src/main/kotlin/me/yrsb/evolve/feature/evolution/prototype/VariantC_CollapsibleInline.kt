@@ -40,13 +40,16 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.tooling.preview.Preview
 import me.yrsb.evolve.core.engine.EvolveEngine
 import me.yrsb.evolve.core.model.EvolutionState
 import me.yrsb.evolve.core.model.GameCommand
 import me.yrsb.evolve.core.model.GameState
+import me.yrsb.evolve.core.model.OrganelleState
 import me.yrsb.evolve.core.model.OrganelleType
 import me.yrsb.evolve.core.model.ResourcePool
 import me.yrsb.evolve.core.model.ResourceType
+import me.yrsb.evolve.core.ui.theme.EvolveTheme
 
 /**
  * 变体 C：折叠伸缩顶栏 (Collapsible Sticky Header) + 内联非模态卡片 (Inline Breakdown Card)
@@ -328,5 +331,35 @@ fun VariantC_CollapsibleInline(
                 }
             }
         }
+    }
+}
+
+@Preview(name = "Variant C: Collapsible Accordion", showBackground = true, backgroundColor = 0xFF0F172A)
+@Composable
+fun VariantCPreview() {
+    val sampleState = remember {
+        GameState(
+            tick = 120,
+            resources = mapOf(
+                ResourceType.RNA to ResourcePool(amount = 75.0, capacity = 150.0, rate = 3.5),
+                ResourceType.DNA to ResourcePool(amount = 12.0, capacity = 20.0, rate = 0.0)
+            ),
+            evolution = EvolutionState(
+                organelles = mapOf(
+                    OrganelleType.MEMBRANE to OrganelleState(count = 2),
+                    OrganelleType.CYTOPLASM to OrganelleState(count = 6),
+                    OrganelleType.MITOCHONDRIA to OrganelleState(count = 2)
+                ),
+                manualClicks = 105
+            )
+        )
+    }
+    EvolveTheme {
+        VariantC_CollapsibleInline(
+            engine = remember { EvolveEngine(sampleState) },
+            gameState = sampleState,
+            resources = sampleState.resources,
+            evolution = sampleState.evolution
+        )
     }
 }

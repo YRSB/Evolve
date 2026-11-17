@@ -11,8 +11,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import me.yrsb.evolve.core.engine.EvolveEngine
+import me.yrsb.evolve.core.ui.theme.EvolveTheme
 import me.yrsb.evolve.feature.evolution.prototype.PrototypeSwitcher
 import me.yrsb.evolve.feature.evolution.prototype.PrototypeVariant
 import me.yrsb.evolve.feature.evolution.prototype.VariantA_PillBottomSheet
@@ -69,5 +71,14 @@ fun EvolutionScreen(
                 modifier = Modifier.align(Alignment.BottomCenter)
             )
         }
+    }
+}
+
+@Preview(name = "Evolution Screen Full Flow", showBackground = true, backgroundColor = 0xFF0F172A)
+@Composable
+fun EvolutionScreenPreview() {
+    val engine = remember { EvolveEngine() }
+    EvolveTheme {
+        EvolutionScreen(engine = engine)
     }
 }

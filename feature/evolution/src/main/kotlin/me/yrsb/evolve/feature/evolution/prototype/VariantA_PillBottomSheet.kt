@@ -45,13 +45,16 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.tooling.preview.Preview
 import me.yrsb.evolve.core.engine.EvolveEngine
 import me.yrsb.evolve.core.model.EvolutionState
 import me.yrsb.evolve.core.model.GameCommand
 import me.yrsb.evolve.core.model.GameState
+import me.yrsb.evolve.core.model.OrganelleState
 import me.yrsb.evolve.core.model.OrganelleType
 import me.yrsb.evolve.core.model.ResourcePool
 import me.yrsb.evolve.core.model.ResourceType
+import me.yrsb.evolve.core.ui.theme.EvolveTheme
 
 /**
  * 变体 A：顶部紧凑药丸条 (Tonal Pill Strip) + 单击唤起 ModalBottomSheet
@@ -508,5 +511,35 @@ private fun ResourcePill(
                 )
             }
         }
+    }
+}
+
+@Preview(name = "Variant A: Pill Strip & BottomSheet", showBackground = true, backgroundColor = 0xFF0F172A)
+@Composable
+fun VariantAPreview() {
+    val sampleState = remember {
+        GameState(
+            tick = 42,
+            resources = mapOf(
+                ResourceType.RNA to ResourcePool(amount = 25.5, capacity = 100.0, rate = 1.25),
+                ResourceType.DNA to ResourcePool(amount = 3.0, capacity = 20.0, rate = 0.0)
+            ),
+            evolution = EvolutionState(
+                organelles = mapOf(
+                    OrganelleType.MEMBRANE to OrganelleState(count = 1),
+                    OrganelleType.CYTOPLASM to OrganelleState(count = 3),
+                    OrganelleType.MITOCHONDRIA to OrganelleState(count = 1)
+                ),
+                manualClicks = 48
+            )
+        )
+    }
+    EvolveTheme {
+        VariantA_PillBottomSheet(
+            engine = remember { EvolveEngine(sampleState) },
+            gameState = sampleState,
+            resources = sampleState.resources,
+            evolution = sampleState.evolution
+        )
     }
 }
