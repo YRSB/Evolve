@@ -61,7 +61,7 @@ if (global.race.species === 'protoplasm'){
 ```
 
 - **基础容量上限（Base Capacity）**：
-  $$\text{Cap}_{\text{base}} = 100 + 50 \times \max(0, \text{Level}(\text{mass\_extinction}) - 1)$$
+  $$\text{Cap}_{\text{base}} = 100 + 50 \times \max(0, \text{Level}(\text{mass-extinction}) - 1)$$
   *注：若无大灭绝成就（Mass Extinction），基础上限为 100。*
 
 ### 2.2 动态容量上限计算公式 (Cap Calculation)
@@ -70,10 +70,10 @@ if (global.race.species === 'protoplasm'){
 
 $$\text{Cap}_{\text{RNA}} = \text{Cap}_{\text{base}} + N_{\text{membrane}} \times (N_{\text{mitochondria}} \times 5 + 5)$$
 
-$$\text{Cap}_{\text{DNA}} = \text{Cap}_{\text{base}} + N_{\text{eukaryotic\_cell}} \times (N_{\text{mitochondria}} \times 10 + 10)$$
+$$\text{Cap}_{\text{DNA}} = \text{Cap}_{\text{base}} + N_{\text{eukaryotic-cell}} \times (N_{\text{mitochondria}} \times 10 + 10)$$
 
 - $N_{\text{membrane}}$: 已购买细胞膜数量（`global.evolution.membrane.count`）
-- $N_{\text{eukaryotic\_cell}}$: 已购买真核细胞数量（`global.evolution.eukaryotic_cell.count`）
+- $N_{\text{eukaryotic-cell}}$: 已购买真核细胞数量（`global.evolution.eukaryotic_cell.count`）
 - $N_{\text{mitochondria}}$: 已购买线粒体数量（`global.evolution.mitochondria.count`）
 
 **线粒体增益效应**：
@@ -85,7 +85,7 @@ $$\text{Cap}_{\text{DNA}} = \text{Cap}_{\text{base}} + N_{\text{eukaryotic\_cell
 1. **合成 RNA (`evolution-rna`)** (`refs/src/actions.js#L23-L38`):
    - **条件**：`global.resource.RNA.display && !global.race.evoFinalMenu`
    - **单次点击产出**：
-     $$\Delta\text{RNA} = \begin{cases} 2, & \text{若拥有突变性状 } \texttt{rapid\_mutation} \\ 1, & \text{默认} \end{cases}$$
+     $$\Delta\text{RNA} = \begin{cases} 2, & \text{若拥有突变性状 } \text{rapid-mutation} \\ 1, & \text{默认} \end{cases}$$
    - **上限约束**：$\text{RNA}_{\text{amount}} < \text{RNA}_{\text{max}}$
 
 2. **合成 DNA (`evolution-dna`)** (`refs/src/actions.js#L39-L54`):
@@ -141,10 +141,10 @@ graph TD
 | :--- | :--- | :--- |
 | **DNA 合成** | $\text{RNA} \ge 2$ (L1252) | 允许将 RNA 转化为 DNA；若拥有 `mass_extinction > 1`，首次解锁直接加满 RNA/DNA 池。 |
 | **细胞膜** (`membrane`) | $\text{RNA} \ge 10$ (L1261) | 提升 RNA 上限：每件 $+5 \times (N_{\text{mito}} + 1)$。 |
-| **细胞器** (`organelles`) | $\text{DNA} \ge 4$ (L1265) | 自动化生产 RNA：每秒产生 $N_{\text{org}} \times \text{mult}_{\text{rna}}$。 |
+| **细胞器** (`organelles`) | $\text{DNA} \ge 4$ (L1265) | 自动化生产 RNA：每秒产生 $N_{\text{org}} \times \text{mult}_{\text{RNA}}$。 |
 | **细胞核** (`nucleus`) | $N_{\text{organelles}} \ge 2$ (L1269) | 自动化将 RNA 转录为 DNA：每秒消耗 $2 \times N_{\text{nuc}}$ RNA，生成 $1 \times N_{\text{nuc}}$ DNA（$\text{evo}\ge 5$ 时翻倍）。 |
 | **真核细胞** (`eukaryotic_cell`) | $N_{\text{nucleus}} \ge 1$ (L1273) | 提升 DNA 上限：每件 $+10 \times (N_{\text{mito}} + 1)$。 |
-| **线粒体** (`mitochondria`) | $N_{\text{eukaryotic\_cell}} \ge 1$ (L1277) | 双重放大细胞膜与真核细胞的容量收益；首次购买触发 `global.tech['evo'] = 1`。 |
+| **线粒体** (`mitochondria`) | $N_{\text{eukaryotic-cell}} \ge 1$ (L1277) | 双重放大细胞膜与真核细胞的容量收益；首次购买触发 `global.tech['evo'] = 1`。 |
 
 ### 3.2 预设强化与跳过机制 (Master/Grandmaster Perks)
 
@@ -154,11 +154,11 @@ graph TD
    - 计算：`perk_rank = min(stats.achieve.ascended.l, stats.feat.master)`（模拟环境为 5）。
    - 若 `perk_rank > 0 && !global.evolution.mloaded`：
      - 直接解锁所有 5 种细胞器与 DNA。
-     - $N_{\text{membrane}} = \text{perk\_rank} \times 2$
-     - $N_{\text{eukaryotic\_cell}} = \text{perk\_rank}$
-     - $N_{\text{mitochondria}} = \text{perk\_rank}$
-     - $N_{\text{organelles}} = \text{perk\_rank} \times 2$
-     - $N_{\text{nucleus}} = \text{perk\_rank} \times 2$
+     - $N_{\text{membrane}} = \text{perk-rank} \times 2$
+     - $N_{\text{eukaryotic-cell}} = \text{perk-rank}$
+     - $N_{\text{mitochondria}} = \text{perk-rank}$
+     - $N_{\text{organelles}} = \text{perk-rank} \times 2$
+     - $N_{\text{nucleus}} = \text{perk-rank} \times 2$
      - 直接赋予 `global.tech['evo'] = 2`，绕过整个单细胞培养期！
 2. **宗师专长 (Grandmaster Feat & Corrupted)**:
    - 计算：`grand_rank = min(stats.achieve.corrupted.l, stats.feat.grandmaster)`。
@@ -179,7 +179,7 @@ graph TD
   *注：每个 Tick 发生的增量乘以 $0.25$，确保 1 秒内 4 个 Tick 的总产出恰好等于 1 秒的额定标称值。*
 - **全局产出乘数** (`global_multiplier`):
   在 `refs/src/main.js#L894-L950` 中计算：
-  $$\text{global\_multiplier} = 1 + \text{PlasmidBonus} + \text{AntiPlasmidBonus} + \text{SupercoiledBonus} + \dots$$
+  $$\text{global-multiplier} = 1 + \text{PlasmidBonus} + \text{AntiPlasmidBonus} + \text{SupercoiledBonus} + \dots$$
 
 ### 4.2 演化时代 Tick 执行管道算法
 
