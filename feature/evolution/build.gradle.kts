@@ -5,7 +5,7 @@ plugins {
 
 android {
   namespace = "me.yrsb.evolve.feature.evolution"
-  compileSdk = 35
+  compileSdk = 36
 
   defaultConfig {
     minSdk = 26
