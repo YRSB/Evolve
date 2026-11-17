@@ -11,3 +11,8 @@ Canonical 5-role triage vocabulary (`needs-triage`, `needs-info`, `ready-for-age
 ### Domain docs
 
 Single-context (`GLOSSARY.md` + `docs/adr/` at the root). See `docs/agents/domain.md`.
+
+### CI & Verification
+
+All compilation, testing, and artifact verification run remotely via GitHub Actions CI. Do not run heavy local compilation. See `docs/agents/ci.md`.
+
