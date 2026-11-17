@@ -70,6 +70,8 @@ fun VariantB_GridDropdown(
 ) {
     val rna = resources[ResourceType.RNA] ?: ResourcePool()
     val dna = resources[ResourceType.DNA] ?: ResourcePool()
+    val rnaProg = (rna.amount / rna.capacity.coerceAtLeast(1.0)).toFloat().coerceIn(0f, 1f)
+    val dnaProg = (dna.amount / dna.capacity.coerceAtLeast(1.0)).toFloat().coerceIn(0f, 1f)
 
     var showRnaMenu by remember { mutableStateOf(false) }
     var showDnaMenu by remember { mutableStateOf(false) }
@@ -134,7 +136,6 @@ fun VariantB_GridDropdown(
                                         fontWeight = FontWeight.Bold
                                     )
                                     Spacer(modifier = Modifier.height(4.dp))
-                                    val rnaProg = (rna.amount / rna.capacity.coerceAtLeast(1.0)).toFloat().coerceIn(0f, 1f)
                                     LinearProgressIndicator(
                                         progress = { rnaProg },
                                         modifier = Modifier
@@ -214,7 +215,6 @@ fun VariantB_GridDropdown(
                                         fontWeight = FontWeight.Bold
                                     )
                                     Spacer(modifier = Modifier.height(4.dp))
-                                    val dnaProg = (dna.amount / dna.capacity.coerceAtLeast(1.0)).toFloat().coerceIn(0f, 1f)
                                     LinearProgressIndicator(
                                         progress = { dnaProg },
                                         modifier = Modifier
